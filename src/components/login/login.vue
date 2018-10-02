@@ -2,7 +2,6 @@
  <div class="login">
    <div class="loginWap">
      <div>LOGIN FORM</div>
-
    </div>
  </div>
 </template>
