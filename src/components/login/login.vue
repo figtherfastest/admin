@@ -10,7 +10,14 @@
           <el-input v-model="input" placeholder="请输入内容"></el-input>
         </div>
       </div>
-      <div></div>
+      <div class="password">
+        <div class="icon">
+          <i class="el-icon-edit"></i>
+        </div>
+        <div class="inputs">
+          <el-input v-model="input" placeholder="请输入内容"></el-input>
+        </div>
+      </div>
       <div></div>
     </div>
   </div>
@@ -28,8 +35,8 @@
     background-color: #2d3a4b;
     position: relative;
     .loginWap {
-      width: 42%;
-      margin-left: 29%;
+      width: 30%;
+      margin-left: 35%;
       height: 40%;
       background: red;
       position: absolute;
@@ -41,8 +48,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 35px;
+        font-size: 30px;
         color: white;
+        .account{
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          .icon{
+            flex: 1;
+            height: 100%;
+          }
+          .inputs{
+            flex: 1;
+            height: 100%;
+          }
+        }
       }
     }
   }
