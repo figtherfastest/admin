@@ -1,35 +1,49 @@
 <template>
- <div class="login">
-   <div class="loginWap">
-     <div>LOGIN FORM</div>
-   </div>
- </div>
+  <div class="login">
+    <div class="loginWap">
+      <div class="tit">LOGIN FORM</div>
+      <div class="account">
+        <div class="icon">
+          <i class="el-icon-edit"></i>
+        </div>
+        <div class="inputs">
+          <el-input v-model="input" placeholder="请输入内容"></el-input>
+        </div>
+      </div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'index',
-  data () {
-    return {}
-  }
-}
+  export default {}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  .login{
+  .login {
     width: 100%;
     height: 100%;
     background-color: #2d3a4b;
     position: relative;
-    .loginWap{
+    .loginWap {
       width: 42%;
       margin-left: 29%;
-      height: 60%;
+      height: 40%;
       background: red;
       position: absolute;
-      top: 20%;
+      top: 25%;
       left: 0;
+      .tit {
+        width: 100%;
+        height: 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        color: white;
+      }
     }
   }
 </style>
