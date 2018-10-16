@@ -7,7 +7,9 @@
       </div>
       <div class="curbWap">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item v-for="(item,index) in breadCurbList" :to="{ path: item.url?'/'+item.url:'' }" :class="index==0?'firstCurb':'not'">{{item.name}}</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="(item,index) in breadCurbList" :to="{ path: item.url?'/'+item.url:'' }"
+                              :class="index==0?'firstCurb':'not'">{{item.name}}
+          </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
@@ -16,28 +18,29 @@
 </template>
 
 <script>
-  import {mapMutations,mapGetters} from 'vuex'
+  import {mapMutations, mapGetters} from 'vuex'
+  
   export default {
     name: 'breadCrumb',
-    data(){
-      return{
-        verticalLine:true,
-        horizonalLine:false,
-        navBarMaxOrMin:true
+    data () {
+      return {
+        verticalLine: true,
+        horizonalLine: false,
+        navBarMaxOrMin: true
       }
     },
-    computed:{
+    computed: {
       ...mapGetters([
         'breadCurbList'
       ])
     },
-    methods:{
-      changeNavBar(){
+    methods: {
+      changeNavBar () {
         this.verticalLine = !this.verticalLine
         this.horizonalLine = !this.horizonalLine
         this.navBarMaxOrMin = !this.navBarMaxOrMin
         this.setNavBarState(this.horizonalLine)
-        this.$emit('navBarMaxOrMin',this.navBarMaxOrMin)
+        this.$emit('navBarMaxOrMin', this.navBarMaxOrMin)
       },
       ...mapMutations({
         setNavBarState: 'SET_NAVBARSTATE'
@@ -76,12 +79,14 @@
       flex: 1;
     }
   }
- .icon{
-   font-size: 25px;
- }
-  .firstCurb{
+  
+  .icon {
+    font-size: 25px;
+  }
+  
+  .firstCurb {
     font-weight: bolder !important;
     color: black !important;
   }
-  
+
 </style>
