@@ -1,11 +1,14 @@
 const state = {
-   navBarState: false,
-  breadCurbList:[
+  navBarState: false,
+  breadCurbList: [
     {
-      url:'',
-      name:'首页'
+      url: '',
+      name: '首页',
     }
-  ]
+  ],
+  coverState: false,
+  indexListDetail:{},
+  fixOneList:{}
 }
 
 export default state

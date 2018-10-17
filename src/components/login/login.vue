@@ -38,7 +38,7 @@ export default {
   methods: {
     login () {
       this.$router.push({
-        path: '/index'
+        path: '/indexList'
       })
     }
   }

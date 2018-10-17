@@ -10,14 +10,15 @@
         <breadCrumb @navBarMaxOrMin='navBarMaxOrMin'></breadCrumb>
       </div>
       <div class="mainContent">
+        <router-view></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import navBar from './component/navBar'
-  import breadCrumb from './component/breadCrumb'
+  import navBar from './commomComponents/layout/navBar'
+  import breadCrumb from './commomComponents/layout/breadCrumb'
   
   export default {
     name: 'layout',
@@ -62,7 +63,7 @@
       }
       .mainContent {
         width: 100%;
-        height: 94%;
+        height: 85%;
       }
     }
   }
