@@ -1,78 +1,86 @@
 <template>
   <div class="indexList">
     <div class="formWap">
-      <operate @deleteGroup="deleteGroup"></operate>
+      <operate @deleteGroup="deleteGroup" :header="formHeader"></operate>
       <forms :header="formHeader" :operateState="operateState"></forms>
+      <pagination></pagination>
     </div>
-    <messageBox></messageBox>
-    <listDetail @fixOneState="fixOneState" ></listDetail>
+    <coverListDetail @fixOneState="fixOneState"></coverListDetail>
   </div>
 </template>
-
 <script>
   import * as indexUrl from '../../api/url'
-  import {getRequest, postRequest} from '../../api/axios'
-  import {mapMutations,mapGetters} from 'vuex'
+  import {postRequest, getParamsRequest} from '../../api/axios'
+  import {mapMutations, mapGetters} from 'vuex'
   import forms from '../commomComponents/forms/forms'
   import pagination from '../commomComponents/pagination/pagination'
-  import listDetail from '../commomComponents/coverListDetail/coverListDetail'
-  import messageBox from '../commomComponents/messageBox/messageBox'
+  import coverListDetail from '../commomComponents/coverListDetail/coverListDetail'
   import operate from '../commomComponents/operate/operate'
   
   export default {
     name: 'indexList',
     data () {
       return {
-        formHeader: ['id','景区','票价'],
-        operateState:true
+        formHeader: ['id', '景区', '票价'],
+        operateState: true
       }
     },
-    computed:{
+    computed: {
       ...mapGetters([
         'groupDelete'
       ])
     },
     created () {
-      this.loadData()
+      var data = {
+        currentPage: 0,
+        pageSize: 100
+      }
+      var url = indexUrl.scenicPriceItemList
+      var method = 'getParam'
+      this.loadData(method, url, data)
     },
     methods: {
-      loadData(){
-        var url = indexUrl.scenicPriceItemList
-        var data ={
-          currentPage:0,
-          pageSize:100
+      loadData (method, url, data) {
+        var responce = ''
+        if (method === 'get') {
+          responce = getRequest(url, data)
+        } else if (method === 'getParam') {
+          responce = getParamsRequest(url, data)
+        } else if (method === 'post') {
+          responce = postRequest(url, data)
         }
-        getRequest(url,data).then(res=>{
-          if(res.data.code === 0){
+        responce.then(res => {
+          if (res.data.code === 0) {
             var list = res.data.data.list
             this.set_indexListDetail(list)
           }
         })
       },
-      fixOneState(item){
+      // change One
+      fixOneState (item) {
         var url = indexUrl.updateScenicPriceItem
-        postRequest(url,item).then(res=>{
-          if(res.data.code === 0){
-             this.set_coverState(false)
+        postRequest(url, item).then(res => {
+          if (res.data.code === 0) {
+            this.set_coverState(false)
             this.$alert('更新成功', '成功', {
               confirmButtonText: '确定'
-            });
+            })
           }
         })
       },
-      deleteGroup(){
+      //group delete
+      deleteGroup () {
         console.log(this.groupDelete)
       },
       ...mapMutations({
-        set_indexListDetail:'SET_INDEXLISTDETAIL',
+        set_indexListDetail: 'SET_INDEXLISTDETAIL',
         set_coverState: 'SET_COVERSTATE',
       })
     },
     components: {
       forms,
       pagination,
-      listDetail,
-      messageBox,
+      coverListDetail,
       operate
     }
   }
@@ -85,7 +93,7 @@
     .formWap {
       width: 90%;
       margin-left: 5%;
-      height: 80%;
+      height: 95%;
       margin-top: 3%;
     }
   }

@@ -19,9 +19,15 @@ const mutations = {
   [types.SET_FIXONENAME] (state, fixOneName) {
     state.fixOneName = fixOneName
   },
-  [types.SET_GROUPDELETE] (state,groupDelete ) {
+  [types.SET_GROUPDELETE] (state, groupDelete) {
     state.groupDelete = groupDelete
   },
+  [types.SET_LOADSTATE] (state, loadState) {
+    state.loadState = loadState
+  },
+  [types.SET_ALLLISTTOTAL] (state, allListTotal) {
+    state.allListTotal = allListTotal
+  }
 }
 
 export default mutations

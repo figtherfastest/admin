@@ -1,4 +1,5 @@
 <template>
+  <transition name="slide">
   <div class="listDetail" v-show="coverState">
     <div class="bdgs" @click="changeCoverStates"></div>
     <div class="listContent">
@@ -7,7 +8,7 @@
         <el-main>
           <div class="contentList" v-for="item in OneList">
             <div class="tit">{{item.name}}</div>
-            <el-input placeholder="请输入内容" ref="checkValue" :value="item.value" @blur="changeInputs"></el-input>
+            <el-input placeholder="请输入内容" :disabled="item.name==='id'" ref="checkValue"  :value="item.value" @blur="changeInputs"></el-input>
           </div>
         </el-main>
         <el-footer>
@@ -19,6 +20,7 @@
       </el-container>
     </div>
   </div>
+  </transition>
 </template>
 <script>
   import {mapGetters, mapMutations} from 'vuex'
@@ -48,7 +50,6 @@
           this.$refs.checkValue.forEach((res, index) => {
             dataObj[key[index]] = res.currentValue
           })
-          
           this.$emit('fixOneState', dataObj)
         }
       },
@@ -163,10 +164,15 @@
       }
     }
   }
-  
   .el-input-group__prepend {
     background-color: #fff;
     border: none !important;
   }
+  .slide-enter-active, .slide-leave-active {
+    transition: all 0.6s
+  }
 
+  .slide-enter, .slide-leave-to {
+    transform: translate3d(0, -100%, 0);
+  }
 </style>

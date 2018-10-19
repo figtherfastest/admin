@@ -89,10 +89,10 @@
       },
       getSingerId (id) {
         if (event.target.checked === true) {
-          allId.push(id)
+          allId.push(id+'')
           this.set_groupDelete(allId)
         } else {
-          allId[allId.indexOf(id)] = null
+          allId[allId.indexOf(id+'')] = null
           allId.splice(allId.indexOf(null), 1)
           this.set_groupDelete(allId)
         }
@@ -110,7 +110,7 @@
 <style scoped lang="scss">
   .forms {
     width: 100%;
-    height: 85%;
+    height: 80%;
     overflow: auto;
   }
   

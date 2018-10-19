@@ -10,7 +10,9 @@ const state = {
   indexListDetail:{},
   fixOneList:{},
   fixOneName:{},
-  groupDelete:[]
+  groupDelete:[],
+  loadState:'load',
+  allListTotal:100
 }
 
 export default state
