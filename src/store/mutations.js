@@ -13,9 +13,15 @@ const mutations = {
   [types.SET_INDEXLISTDETAIL] (state, indexListDetail) {
     state.indexListDetail = indexListDetail
   },
-  [types.SET_FIXONELIST](state,fixOneList){
+  [types.SET_FIXONELIST] (state, fixOneList) {
     state.fixOneList = fixOneList
-  }
+  },
+  [types.SET_FIXONENAME] (state, fixOneName) {
+    state.fixOneName = fixOneName
+  },
+  [types.SET_GROUPDELETE] (state,groupDelete ) {
+    state.groupDelete = groupDelete
+  },
 }
 
 export default mutations

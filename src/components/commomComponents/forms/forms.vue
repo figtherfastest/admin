@@ -1,32 +1,33 @@
 <template>
   <div class="forms">
+    <!--tittle-->
     <el-row>
-      <el-col v-for="headItem in header" :span="headItem.grind">
-        <div class="grid-content">{{headItem.name}}</div>
+      <el-col :span="6" v-show="operateState">
+        <div class="grid-content">
+          <el-button type="primary" size="mini" icon="el-icon-check" @click="chooseAll">全选</el-button>
+        </div>
+      </el-col>
+      <el-col v-for="headItem in header">
+        <div class="grid-content">{{headItem}}</div>
+      </el-col>
+      <el-col :span="10">
+        <div class="grid-content">操作</div>
       </el-col>
     </el-row>
-    <el-row v-for="contentItem in content">
-      <el-col :span="1">
-        <div class="grid-content">{{contentItem.id}}</div>
+    <!--content-->
+    <el-row v-for="(contentItem,contentIndex) in content">
+      <el-col :span="6" v-show="operateState">
+        <div class="grid-content">
+          <input type="checkbox" class="checkboxs" ref="checkBoxId" :checked="checkedState" :id="contentItem.id"
+                 @change="getSingerId(contentItem.id)">
+        </div>
       </el-col>
-      <el-col :span="3">
-        <div class="grid-content">{{contentItem.date}}</div>
+      <el-col v-for="item in contentItem">
+        <div class="grid-content">{{item}}</div>
       </el-col>
-      <el-col :span="2">
-        <div class="grid-content">{{contentItem.auth}}</div>
-      </el-col>
-      <el-col :span="2">
-        <div class="grid-content">{{contentItem.sex}}</div>
-      </el-col>
-      <el-col :span="2">
-        <div class="grid-content">{{contentItem.status}}</div>
-      </el-col>
-      <el-col :span="12">
-        <div class="grid-content" style="text-align: left;padding-left: 20px;">{{contentItem.tittle}}</div>
-      </el-col>
-      <el-col :span="2">
+      <el-col :span="10">
         <el-row>
-          <el-button size="mini" type="primary" @click="changeCoverState">
+          <el-button size="mini" type="primary" @click="changeCoverState(contentIndex)">
             <i class="el-icon-edit"></i>
             <span>detail</span>
           </el-button>
@@ -35,10 +36,10 @@
     </el-row>
   </div>
 </template>
-
 <script>
   import {mapMutations, mapGetters} from 'vuex'
   
+  let allId = []
   export default {
     name: 'forms',
     props: {
@@ -46,9 +47,15 @@
         type: Array,
         default: []
       },
+      operateState: {
+        type: Boolean,
+        default: false
+      }
     },
-    created () {
-      console.log(this.indexListDetail)
+    data () {
+      return {
+        checkedState: false
+      }
     },
     computed: {
       content () {
@@ -59,13 +66,42 @@
       ])
     },
     methods: {
-      changeCoverState () {
+      changeCoverState (index) {
         this.set_coverState(true)
-        this.set_fixOneList(this.header)
+        this.set_fixOneList(this.content[index])
+        this.set_fixOneName(this.header)
+      },
+      chooseAll () {
+        this.checkedState = !this.checkedState
+        if (this.checkedState === true) {
+          var that = this
+          allId = []
+          setTimeout(function () {
+            that.$refs.checkBoxId.forEach(res => {
+              if (res.checked === true) {
+                allId.push(res.id)
+              }
+            })
+          }, 500)
+          console.log(allId)
+          this.set_groupDelete(allId)
+        }
+      },
+      getSingerId (id) {
+        if (event.target.checked === true) {
+          allId.push(id)
+          this.set_groupDelete(allId)
+        } else {
+          allId[allId.indexOf(id)] = null
+          allId.splice(allId.indexOf(null), 1)
+          this.set_groupDelete(allId)
+        }
       },
       ...mapMutations({
         set_coverState: 'SET_COVERSTATE',
-        set_fixOneList:'SET_FIXONELIST'
+        set_fixOneList: 'SET_FIXONELIST',
+        set_fixOneName: 'SET_FIXONENAME',
+        set_groupDelete: 'SET_GROUPDELETE'
       })
     }
   }
@@ -74,7 +110,7 @@
 <style scoped lang="scss">
   .forms {
     width: 100%;
-    height: 100%;
+    height: 85%;
     overflow: auto;
   }
   
@@ -116,5 +152,14 @@
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+  
+  .checkboxs {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .checkboxs:checked {
+    background: red;
   }
 </style>

@@ -5,9 +5,9 @@
       <el-container>
         <el-header>编辑</el-header>
         <el-main>
-          <div class="contentList" v-for="item in fixOneList">
+          <div class="contentList" v-for="item in OneList">
             <div class="tit">{{item.name}}</div>
-            <el-input placeholder="请输入内容" ref="checkValue"></el-input>
+            <el-input placeholder="请输入内容" ref="checkValue" :value="item.value" @blur="changeInputs"></el-input>
           </div>
         </el-main>
         <el-footer>
@@ -22,37 +22,53 @@
 </template>
 <script>
   import {mapGetters, mapMutations} from 'vuex'
+  import * as urls from '../../../api/url'
+  import {getRequest, postRequest} from '../../../api/axios'
   
   export default {
     name: 'listDetail',
     data () {
-      return {}
+      return {
+        inputStates: true
+      }
     },
     methods: {
       changeCoverStates () {
         this.set_coverState(false)
       },
+      
       coverConfirmBtn () {
-        //在这边请求两个数据
-        // 请求1：编辑确定的按钮
-        //请求2：更新列表
-        // 这两个请求的url 和 data 应该都是 别的页面传递过来  请求要求：1，说明是post请求还是get请求
-        if(this.checkContent()===false){
-          alert('111')
+        if (this.inputStates === false) {
+          this.$alert('请填写完成的信息', '失败', {
+            confirmButtonText: '确定'
+          })
+        } else {
+          var dataObj = this.fixOneList
+          var key = Object.keys(dataObj)
+          this.$refs.checkValue.forEach((res, index) => {
+            dataObj[key[index]] = res.currentValue
+          })
+          
+          this.$emit('fixOneState', dataObj)
         }
-        
       },
+      
       //表单验证
-      checkContent () {
-        var listItem = this.$refs.checkValue
-        for(var i=0;i<listItem.length;i++){
-          if(listItem[i].currentValue === ""){
-            return false
-          }
+      changeInputs (event) {
+        console.log(event)
+        if (event.target.value === '') {
+          this.$message({
+            showClose: true,
+            message: '请填写完整的信息,么么哒',
+            duration: 1000,
+            type: 'error'
+          })
+          this.inputStates = false
+        } else {
+          this.inputStates = true
         }
       },
       coverQuitBtn () {
-        
         this.set_coverState(false)
       },
       ...mapMutations({
@@ -60,9 +76,21 @@
       })
     },
     computed: {
+      OneList () {
+        var allKeys = Object.values(this.fixOneList)
+        var kvObj = []
+        allKeys.forEach((res, index) => {
+          var obj = {}
+          obj.name = this.fixOneName[index]
+          obj.value = res
+          kvObj.push(obj)
+        })
+        return kvObj
+      },
       ...mapGetters([
         'coverState',
-        'fixOneList'
+        'fixOneList',
+        'fixOneName'
       ])
     },
   }
