@@ -7,27 +7,27 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: ()=>import('@/components/login/login')
+      component: () => import('@/components/login/login')
     },
     {
       path: 'index',
-      component: ()=>import('@/components/index'),
+      component: () => import('@/components/index'),
       children: [
         {
           path: '/indexList',
-          component: ()=>import('@/components/indexList/indexList')
+          component: () => import('@/components/indexList/indexList')
         },
         {
-          path: '/userSystem',
-          component: ()=>import('@/components/userSystem/userSystem')
+          path: '/scenicSpot',
+          component: () => import('@/components/scenicSpot/scenicSpot')
         },
         {
           path: '/systemOne',
-          component: ()=>import('@/components/systemOne/systemOne')
+          component: () => import('@/components/systemOne/systemOne')
         },
         {
           path: '/systemTwo',
-          component: ()=>import('@/components/systemTwo/systemTwo')
+          component: () => import('@/components/systemTwo/systemTwo')
         },
       ]
     },

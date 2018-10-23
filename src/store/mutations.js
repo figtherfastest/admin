@@ -25,9 +25,18 @@ const mutations = {
   [types.SET_LOADSTATE] (state, loadState) {
     state.loadState = loadState
   },
-  [types.SET_ALLLISTTOTAL] (state, allListTotal) {
-    state.allListTotal = allListTotal
-  }
+  [types.SET_ADDONELISTSTATE](state,addOneListState){
+    state.addOneListState = addOneListState
+  },
+  [types.SET_ADDONEPARAMS](state,addOneParams){
+    state.addOneParams = addOneParams
+  },
+  [types.SET_OPERATECHOOSEDSENCE](state,operateChoosedSence){
+    state.operateChoosedSence = operateChoosedSence
+  },
+  [types.SET_OPERATECHOOSEDDATE](state,operateChoosedDate){
+    state.operateChoosedDate = operateChoosedDate
+  },
 }
 
 export default mutations

@@ -1,20 +1,17 @@
 <template>
   <div class="indexList">
     <div class="formWap">
-      <operate @deleteGroup="deleteGroup" :header="formHeader"></operate>
       <forms :header="formHeader" :operateState="operateState"></forms>
-      <pagination></pagination>
     </div>
     <coverListDetail @fixOneState="fixOneState"></coverListDetail>
   </div>
 </template>
 <script>
-  import * as indexUrl from '../../api/url'
-  import {postRequest, getParamsRequest} from '../../api/axios'
+  import * as indexUrl from '../common/url/url'
   import {mapMutations, mapGetters} from 'vuex'
   import forms from '../commomComponents/forms/forms'
   import pagination from '../commomComponents/pagination/pagination'
-  import coverListDetail from '../commomComponents/coverListDetail/coverListDetail'
+  import coverListDetail from '../commomComponents/coverList/coverListDetail'
   import operate from '../commomComponents/operate/operate'
   
   export default {
@@ -36,41 +33,28 @@
         pageSize: 100
       }
       var url = indexUrl.scenicPriceItemList
-      var method = 'getParam'
-      this.loadData(method, url, data)
+      this.loadData(url, data)
     },
     methods: {
-      loadData (method, url, data) { //加载数据
-        var responce = ''
-        if (method === 'get') {
-          responce = getRequest(url, data)
-        } else if (method === 'getParam') {
-          responce = getParamsRequest(url, data)
-        } else if (method === 'post') {
-          responce = postRequest(url, data)
-        }
-        responce.then(res => {
-          if (res.data.code === 0) {
-            var list = res.data.data.list
+      loadData (url, data) { //加载数据
+        this.$get(url, data).then(res => {
+          if (res.code === 0) {
+            var list = res.data.list
             this.set_indexListDetail(list)
           }
         })
       },
       // 点击详情，修改之后 确定
       fixOneState (item) {
-        var url = indexUrl.updateScenicPriceItem
-        postRequest(url, item).then(res => {
-          if (res.data.code === 0) {
+        this.$post(indexUrl.updateScenicPriceItem, item).then(res => {
+          console.log(res)
+          if (res.code === 0) {
             this.set_coverState(false)
             this.$alert('更新成功', '成功', {
               confirmButtonText: '确定'
             })
           }
         })
-      },
-      //有操作区 批量删除
-      deleteGroup () {
-        console.log(this.groupDelete)
       },
       ...mapMutations({
         set_indexListDetail: 'SET_INDEXLISTDETAIL',

@@ -23,13 +23,11 @@
         perPageNum: 0,
       }
     },
-    computed:{
-      totalNum(){
-        return this.allListTotal
-      },
-      ...mapGetters([
-        'allListTotal'
-      ])
+    props:{
+      totalNum:{
+        type:Number,
+        default:0
+      }
     },
     methods: {
       //change perPage number

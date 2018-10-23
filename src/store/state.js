@@ -12,7 +12,10 @@ const state = {
   fixOneName:{},
   groupDelete:[],
   loadState:'load',
-  allListTotal:100
+  addOneListState:false,
+  addOneParams:{},
+  operateChoosedSence:'',
+  operateChoosedDate:''
 }
 
 export default state
