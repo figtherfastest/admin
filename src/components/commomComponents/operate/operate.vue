@@ -17,7 +17,6 @@
     </el-row>
   </div>
 </template>
-
 <script>
   import {mapGetters,mapMutations} from 'vuex'
   import {SET_LOADSTATE} from '../../../store/mutation-types'

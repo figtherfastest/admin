@@ -21,13 +21,13 @@
     name: 'indexList',
     data () {
       return {
-        formHeader: ['id', '景区', '票价'],
-        operateState: true
+        formHeader: ['id', '景区', '票价'],//tittle 显示
+        operateState: false //是否显示全选
       }
     },
     computed: {
       ...mapGetters([
-        'groupDelete'
+        'groupDelete'  //显示操作区的时候 点击删除
       ])
     },
     created () {
@@ -40,7 +40,7 @@
       this.loadData(method, url, data)
     },
     methods: {
-      loadData (method, url, data) {
+      loadData (method, url, data) { //加载数据
         var responce = ''
         if (method === 'get') {
           responce = getRequest(url, data)
@@ -56,7 +56,7 @@
           }
         })
       },
-      // change One
+      // 点击详情，修改之后 确定
       fixOneState (item) {
         var url = indexUrl.updateScenicPriceItem
         postRequest(url, item).then(res => {
@@ -68,7 +68,7 @@
           }
         })
       },
-      //group delete
+      //有操作区 批量删除
       deleteGroup () {
         console.log(this.groupDelete)
       },
