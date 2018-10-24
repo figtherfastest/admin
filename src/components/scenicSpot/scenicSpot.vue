@@ -5,7 +5,8 @@
                           @search="search"
                           @addOnes="addOnesBtn"></operateSenceFlower>
       <forms :header="formHeader" :operateState="operateState"></forms>
-      <pagination :totalNum="totalNum"></pagination>
+      <pagination :totalNum="totalNum" @handleSizeChange="handleSizeChange"
+                  @handleCurrentChange="handleCurrentChange"></pagination>
     </div>
     <coverListDetail @fixOneState="fixOneState"></coverListDetail>
     <addOne @addListToPage="addListToPage"></addOne>
@@ -26,7 +27,15 @@
       return {
         formHeader: ['id', '客流量', '时间', '是否预测'],
         operateState: true,
-        totalNum:0
+        totalNum: 0,
+        loadDateParam: {
+          scenicId: 670,
+          itemTag: 'd',
+          currentPage: 1,
+          pageSize: 10
+        },
+        searchDateParam: {},
+        pageState:'load'
       }
     },
     computed: {
@@ -41,13 +50,8 @@
     methods: {
       //页面刷新 加载页面
       loadData () { //加载数据
-        var data = {
-          scenicId: 670,
-          itemTag: 'd',
-          currentPage: 1,
-          pageSize: 10
-        }
-        this.$get(urls.mainScenicFlowAndForecast, data).then(res => {
+        this.pageState = 'load'
+        this.$get(urls.mainScenicFlowAndForecast, this.loadDateParam).then(res => {
           if (res.code === 0) {
             this.totalNum = res.data.total
             var list = res.data.list
@@ -68,11 +72,14 @@
       },
       //搜索
       search (item) {
+        this.searchDateParam = item
         var url = urls.mainScenicFlowAndForecast
         this.$get(url, item).then(res => {
           if (res.code === 0) {
             var list = res.data.list
             this.set_indexListDetail(list)
+            this.pageState = 'search'
+            this.totalNum = res.data.total
           }
         })
       },
@@ -104,9 +111,8 @@
       },
       //有操作区 批量删除
       deleteGroup () {
-        console.log(this.groupDelete)
         this.$post(urls.deleteMainScenicFlowAndForecast, this.groupDelete).then(res => {
-          if(res.code === 0){
+          if (res.code === 0) {
             this.$alert('删除成功', '成功', {
               confirmButtonText: '确定'
             })
@@ -117,6 +123,28 @@
             })
           }
         })
+      },
+      //改变每页数量
+      handleSizeChange (item) {
+        if(this.pageState = 'load'){
+          this.loadDateParam.currentPage = item.currentPage
+          this.loadDateParam.pageSize = item.pageSize
+          this.loadData()
+        }
+      },
+      //跳转到某一页
+      handleCurrentChange (item) {
+        if(this.pageState === 'load'){
+          console.log('load')
+          this.loadDateParam.currentPage = item.currentPage
+          this.loadDateParam.pageSize = item.pageSize
+          this.loadData()
+        } else if(this.pageState === 'search'){
+          console.log('search')
+          this.searchDateParam.currentPage = item.currentPage
+          this.searchDateParam.pageSize = item.pageSize
+          this.search(this.searchDateParam)
+        }
       },
       ...mapMutations({
         set_indexListDetail: 'SET_INDEXLISTDETAIL',

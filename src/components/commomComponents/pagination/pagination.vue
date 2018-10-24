@@ -15,39 +15,40 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  
   export default {
     name: 'pagination',
     data () {
       return {
         currentPage: 1,
-        perPageNum: 0,
+        perPageNum: 10,
       }
     },
-    props:{
-      totalNum:{
-        type:Number,
-        default:0
+    props: {
+      totalNum: {
+        type: Number,
+        default: 0
       }
     },
     methods: {
-      //change perPage number
+      //改变每页数量
       handleSizeChange (val) {
         this.perPageNum = val
         var data = {
           currentPage: this.currentPage,
-          pageSize: this.perPageNum
+          pageSize: val
         }
         this.$emit('handleSizeChange',data)
       },
-      //skip to one page
+      //跳转到某一页
       handleCurrentChange (val) {
-        this.perPageNum = val
+        this.currentPage = val
         var data = {
-          currentPage: 1,
+          currentPage: val,
           pageSize: this.perPageNum
-        }
+         }
         this.$emit('handleCurrentChange',data)
-      },
+      }
     },
     
   }

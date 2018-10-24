@@ -7,8 +7,9 @@
       </div>
       <div class="curbWap">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item v-for="(item,index) in breadCurbList" :to="{ path: item.url?'/'+item.url:'' }"
-                              :class="index==0?'firstCurb':'not'">{{item.name}}
+          <el-breadcrumb-item v-for="item in breadCurbList">
+            <span class="firstCurb" v-if="item.url == ''">{{item.name}}</span>
+            <router-link v-else :to="item.url">{{item.name}}</router-link>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>

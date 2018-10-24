@@ -1,7 +1,7 @@
 <template>
   <div class="navBar">
     <el-menu class="el-menu-vertical-demo" :collapse="isCollapse" background-color="#2d3a4b" text-color="#fff"
-             active-text-color="#409eff" default-active="0" :router=true>
+             active-text-color="#409eff" :default-active="this.$route.path.substr(1)" :router=true>
       <navBarItem v-for="item in navList" :navItem="item"></navBarItem>
     </el-menu>
   </div>
@@ -28,7 +28,7 @@
           {
             name: '系统管理',
             id: '123',
-            url: '',
+            url: ' ',
             hasKid: true,
             icon: 'el-icon-document',
             index: '1',
