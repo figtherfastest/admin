@@ -4,7 +4,7 @@
 
 <script>
   export default {
-    name: 'systemOne'
+    name: 'systemUser'
   }
 </script>
 

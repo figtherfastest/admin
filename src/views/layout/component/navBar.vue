@@ -10,7 +10,7 @@
 <script>
   import navBarItem from './navBarItem'
   import {mapGetters} from 'vuex'
-  
+
   export default {
     name: 'navBar',
     data () {

@@ -5,6 +5,8 @@
                           @search="search"
                           @addOnes="addOnesBtn"></operateSenceFlower>
       <forms :header="formHeader" :operateState="operateState"></forms>
+      <!--<tabForm :header="formHeader" :operateState="operateState"></tabForm>-->
+      <!--<uploadImage id="myVueDropzone" url="https://httpbin.org/post" @dropzone-removedFile="dropzoneR" @dropzone-success="dropzoneS"></uploadImage>-->
       <pagination :totalNum="totalNum" @handleSizeChange="handleSizeChange"
                   @handleCurrentChange="handleCurrentChange"></pagination>
     </div>
@@ -16,10 +18,12 @@
   import * as urls from '../common/url/url'
   import {mapMutations, mapGetters} from 'vuex'
   import forms from '../commomComponents/forms/forms'
+  import tabForm from '../commomComponents/forms/tabForm'
   import pagination from '../commomComponents/pagination/pagination'
   import coverListDetail from '../commomComponents/coverList/coverListDetail'
   import operateSenceFlower from '../commomComponents/operate/operateSenceFlower'
   import addOne from '../commomComponents/addOnePage/addOnePage'
+  import uploadImage from '../commomComponents/uploadImage/uploadImage'
   
   export default {
     name: 'indexList',
@@ -72,6 +76,8 @@
       },
       //搜索
       search (item) {
+        this.loadDateParam.itemTag = item.itemTag
+        this.loadDateParam.scenicId = item.scenicId
         this.searchDateParam = item
         var url = urls.mainScenicFlowAndForecast
         this.$get(url, item).then(res => {
@@ -130,21 +136,32 @@
           this.loadDateParam.currentPage = item.currentPage
           this.loadDateParam.pageSize = item.pageSize
           this.loadData()
+        }else if(this.pageState === 'search'){
+          this.searchDateParam.currentPage = item.currentPage
+          this.searchDateParam.pageSize = item.pageSize
+          this.search(this.searchDateParam)
         }
       },
       //跳转到某一页
       handleCurrentChange (item) {
         if(this.pageState === 'load'){
-          console.log('load')
           this.loadDateParam.currentPage = item.currentPage
           this.loadDateParam.pageSize = item.pageSize
           this.loadData()
         } else if(this.pageState === 'search'){
-          console.log('search')
           this.searchDateParam.currentPage = item.currentPage
           this.searchDateParam.pageSize = item.pageSize
           this.search(this.searchDateParam)
         }
+      },
+      
+      dropzoneS(file) {
+        console.log(file)
+        // this.$message({ message: 'Upload success', type: 'success' })
+      },
+      dropzoneR(file) {
+        console.log(file)
+        // this.$message({ message: 'Delete success', type: 'success' })
       },
       ...mapMutations({
         set_indexListDetail: 'SET_INDEXLISTDETAIL',
@@ -156,10 +173,12 @@
     },
     components: {
       forms,
+      tabForm,
       pagination,
       coverListDetail,
       operateSenceFlower,
-      addOne
+      addOne,
+      uploadImage
     }
   }
 </script>

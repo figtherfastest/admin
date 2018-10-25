@@ -51,6 +51,8 @@
             name:name2
           }
         ]
+        alert(1)
+        console.log(data)
         this.set_breadCurbList(data)
       },
       goPage(url,name){

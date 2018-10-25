@@ -1,12 +1,12 @@
 <template>
   <div class="navBarItem">
-    <el-submenu :index="navItem.url" v-show="navItem.hasKid">
+    <el-submenu :index="navItem.index" v-show="navItem.hasKid">
       <template slot="title">
         <i :class="navItem.icon"></i>
         <span slot="title" v-show="!navBarState">{{navItem.name}}</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item :index="listItem.url" v-for="listItem in navItem.kid"
+        <el-menu-item :index="listItem.url" v-for="(listItem,listIndex) in navItem.kid" :key="listIndex"
                       @click="kidGoPages(navItem.url,navItem.name,listItem.url,listItem.name)">
           <i :class="listItem.icon"></i>
           <span slot="title"> {{listItem.name}}</span>

@@ -7,7 +7,7 @@
           <el-button type="primary" size="mini" icon="el-icon-check" @click="chooseAll">全选</el-button>
         </div>
       </el-col>
-      <el-col v-for="headItem in header">
+      <el-col v-for="(headItem,headIndex) in header" :key="headIndex">
         <div class="grid-content">{{headItem}}</div>
       </el-col>
       <el-col :span="10">
@@ -15,14 +15,14 @@
       </el-col>
     </el-row>
     <!--content-->
-    <el-row v-for="(contentItem,contentIndex) in content">
+    <el-row v-for="(contentItem,contentIndex) in content" :key="contentIndex">
       <el-col :span="6" v-show="operateState">
         <div class="grid-content">
           <input type="checkbox" class="checkboxs" ref="checkBoxId" :checked="checkedState" :id="contentItem.id"
                  @change="getSingerId(contentItem.id)">
         </div>
       </el-col>
-      <el-col v-for="item in contentItem">
+      <el-col v-for="(item,index) in contentItem" :key="index">
         <div class="grid-content">{{item}}</div>
       </el-col>
       <el-col :span="10">
@@ -112,8 +112,11 @@
     width: 100%;
     height: 80%;
     overflow: auto;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
   }
-  
   .el-row {
     width: 100%;
     border: 1px solid #ebeef5;

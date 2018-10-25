@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="16">
         <div class="searchWap">
-          <el-input :placeholder="'请输入'+item+'的值'" ref="searchVal" v-for="item in header"></el-input>
+          <el-input :placeholder="'请输入'+item+'的值'" ref="searchVal" v-for="(item,index) in header" :key="index"></el-input>
           <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
         </div>
       </el-col>

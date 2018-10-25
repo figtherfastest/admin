@@ -18,16 +18,15 @@ export default new Router({
           component: () => import('@/components/indexList/indexList')
         },
         {
+          path: '/systemUser',
+          component: () => import('@/components/systemUser/systemUser')
+        },
+        {
+          path: '/systemRole',
+          component: () => import('@/components/systemRole/systemRole')
+        }, {
           path: '/scenicSpot',
           component: () => import('@/components/scenicSpot/scenicSpot')
-        },
-        {
-          path: '/systemOne',
-          component: () => import('@/components/systemOne/systemOne')
-        },
-        {
-          path: '/systemTwo',
-          component: () => import('@/components/systemTwo/systemTwo')
         },
       ]
     },

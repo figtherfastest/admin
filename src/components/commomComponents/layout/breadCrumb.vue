@@ -7,9 +7,10 @@
       </div>
       <div class="curbWap">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item v-for="item in breadCurbList">
-            <span class="firstCurb" v-if="item.url == ''">{{item.name}}</span>
-            <router-link v-else :to="item.url">{{item.name}}</router-link>
+          <el-breadcrumb-item v-for="(item,index) in breadCurbList"
+                              :class="index==0?'firstCurb':'not'"
+                              :key="index"
+          >{{item.name}}
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -20,14 +21,13 @@
 
 <script>
   import {mapMutations, mapGetters} from 'vuex'
-  
   export default {
     name: 'breadCrumb',
     data () {
       return {
         verticalLine: true,
         horizonalLine: false,
-        navBarMaxOrMin: true
+        navBarMaxOrMin: true,
       }
     },
     computed: {
@@ -46,6 +46,11 @@
       ...mapMutations({
         setNavBarState: 'SET_NAVBARSTATE'
       })
+    },
+    created(){
+      if(this.breadCurbList[0].name === '首页'){
+        this.$router.push('/indexList')
+      }
     }
   }
 </script>

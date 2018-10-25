@@ -40,7 +40,7 @@
     name: 'operateSenicFlower',
     data () {
       return {
-        chooseSenicOut: '',
+        chooseSenicOut: '670',
         chooseSenic: [
           {
             value: '670',
@@ -59,7 +59,7 @@
             label: '狮子楼'
           }
         ],
-        chooseTimeOut: '',
+        chooseTimeOut: 'd',
         chooseTime: [
           {
             value: 'm',
@@ -96,6 +96,7 @@
           currentPage: 1,
           pageSize: 10
         }
+        console.log(lastObj)
         this.$emit('search', lastObj)
         this.set_loadState('searchLoad')
         
